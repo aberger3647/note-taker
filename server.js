@@ -46,19 +46,19 @@ app.post('/api/notes', (req, res) => {
     })
 });
 
-// // Delete a note
-// app.delete('/api/notes/:id', (req, res) => {
-//   readFile('db/db.json')
-//   .then(data => {
-//     let allNotes = JSON.parse(data);
-//     const { id } = req.params;
-//     allNotes = allNotes.filter(allNotes.id != id);
-//     writeFile('db/db.json', JSON.stringify(allNotes))
-//     .then(data => {
-//       res.json(allNotes);
-//     })
-//   })
-// });
+// Delete a note
+app.delete('/api/notes/:id', (req, res) => {
+  readFile('db/db.json')
+  .then(data => {
+    let allNotes = JSON.parse(data);
+    const { id } = req.params;
+    allNotes = allNotes.filter(note => note.id !== id);
+    writeFile('db/db.json', JSON.stringify(allNotes))
+    .then(data => {
+      res.json(allNotes);
+    })
+  })
+});
     
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT}`)
