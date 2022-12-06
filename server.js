@@ -8,8 +8,6 @@ const app = express();
 
 // Import notes router
 const notesRouter = require('./routes/notes');
-// Use notes router
-app.use('/notes', notesRouter);
 
 // Middleware for parsing JSON and urlencoded form data
 app.use(express.json());
@@ -17,6 +15,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
+// Use notes router
+app.use('/notes', notesRouter);
 
 // GET Route for landing page
 app.get('/', (req, res) =>
