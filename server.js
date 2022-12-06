@@ -27,9 +27,9 @@ app.get('/notes', (req, res) =>
 // Read db.json file and return saved notes as JSON
 app.get('/api/notes', (req, res) => {
   readFile('db/db.json')
-  .then(data => {
-    res.send(data)
-  })
+    .then(data => {
+      res.send(data)
+    })
 });
 
 // Create and save new note
@@ -37,15 +37,30 @@ app.post('/api/notes', (req, res) => {
   const newNote = req.body;
   newNote.id = uuidv4();
   readFile('db/db.json')
-  .then(data => {
-    const allNotes = JSON.parse(data);
-    allNotes.push(newNote);
-    writeFile('db/db.json', JSON.stringify(allNotes)).then(data => {
-      res.json(newNote);
+    .then(data => {
+      const allNotes = JSON.parse(data);
+      allNotes.push(newNote);
+      writeFile('db/db.json', JSON.stringify(allNotes)).then(data => {
+        res.json(newNote);
+      })
     })
-  })
 });
 
-app.listen(PORT, () =>
-  console.log(`App listening at http://localhost:${PORT}`)
-);
+// // Delete a note
+// app.delete('/api/notes/:id', (req, res) => {
+//   readFile('db/db.json')
+//   .then(data => {
+//     let allNotes = JSON.parse(data);
+//     const { id } = req.params;
+//     allNotes = allNotes.filter(allNotes.id != id);
+//     writeFile('db/db.json', JSON.stringify(allNotes))
+//     .then(data => {
+//       res.json(allNotes);
+//     })
+//   })
+// });
+    
+
+ app.listen(PORT, () =>
+console.log(`App listening at http://localhost:${PORT}`)
+  );
